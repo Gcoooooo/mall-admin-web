@@ -9,7 +9,7 @@
           @click="handleSearchList()"
           type="primary"
           size="small">
-          查询结果
+          查询
         </el-button>
         <el-button
           style="float: right;margin-right: 15px"
@@ -18,62 +18,38 @@
           重置
         </el-button>
       </div>
+
       <div style="margin-top: 15px">
-        <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
-          <el-form-item label="输入搜索：">
-            <el-input style="width: 203px" v-model="listQuery.keyword" placeholder="商品名称"></el-input>
+        <el-form :inline="true" :model="listQuery" size="small" label-width="120px">
+          <el-form-item label="活动ID：">
+            <el-input style="width: 192px" v-model="listQuery.activityId" placeholder="活动ID"></el-input>
           </el-form-item>
-          <el-form-item label="商品货号：">
-            <el-input style="width: 203px" v-model="listQuery.productSn" placeholder="商品货号"></el-input>
+          <el-form-item label="活动名称：">
+            <el-input style="width: 192px" v-model="listQuery.activityTitle" placeholder="活动名称"></el-input>
           </el-form-item>
-          <el-form-item label="商品分类：">
-            <el-cascader
-              clearable
-              v-model="selectProductCateValue"
-              :options="productCateOptions">
-            </el-cascader>
-          </el-form-item>
-          <el-form-item label="商品品牌：">
-            <el-select v-model="listQuery.brandId" placeholder="请选择品牌" clearable>
+          <el-form-item label="活动状态：">
+            <el-select v-model="listQuery.activityStatusCode" placeholder="全部" clearable>
               <el-option
-                v-for="item in brandOptions"
+                v-for="item in activityStatusCode"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="上架状态：">
-            <el-select v-model="listQuery.publishStatus" placeholder="全部" clearable>
-              <el-option
-                v-for="item in publishStatusOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="审核状态：">
-            <el-select v-model="listQuery.verifyStatus" placeholder="全部" clearable>
-              <el-option
-                v-for="item in verifyStatusOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                :value="item.code">
               </el-option>
             </el-select>
           </el-form-item>
         </el-form>
+
       </div>
     </el-card>
+
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
+      <span>活动列表</span>
       <el-button
         class="btn-add"
         @click="handleAddProduct()"
         size="mini">
-        添加
+        新建
       </el-button>
     </el-card>
     <div class="table-container">
@@ -83,122 +59,66 @@
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading"
                 border>
-        <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.id}}</template>
+        <el-table-column label="编号" width="50" align="center">
+          <template slot-scope="scope">{{scope.row.activityId}}</template>
         </el-table-column>
-        <el-table-column label="商品图片" width="120" align="center">
-          <template slot-scope="scope"><img style="height: 80px" :src="scope.row.pic"></template>
+        <el-table-column label="状态" width="70" align="center">
+          <template slot-scope="scope">{{scope.row.activityStatusDescription}}</template>
         </el-table-column>
-        <el-table-column label="商品名称" align="center">
+        <el-table-column label="活动标题" width="200" align="center">
+          <template slot-scope="scope">{{scope.row.activityTitle}}</template>
+        </el-table-column>
+        <el-table-column label="活动时间" width="230" align="center">
           <template slot-scope="scope">
-            <p>{{scope.row.name}}</p>
-            <p>品牌：{{scope.row.brandName}}</p>
+          <p>开始时间：{{scope.row.startTime}}</p>
+          <p>结束时间：{{scope.row.endTime}}</p>
           </template>
         </el-table-column>
-        <el-table-column label="价格/货号" width="120" align="center">
-          <template slot-scope="scope">
-            <p>价格：￥{{scope.row.price}}</p>
-            <p>货号：{{scope.row.productSn}}</p>
-          </template>
+        <el-table-column label="网页页数" width="50" align="center">
+          <template slot-scope="scope">{{scope.row.pageCount}}</template>
         </el-table-column>
-        <el-table-column label="标签" width="140" align="center">
-          <template slot-scope="scope">
-            <p>上架：
-              <el-switch
-                @change="handlePublishStatusChange(scope.$index, scope.row)"
-                :active-value="1"
-                :inactive-value="0"
-                v-model="scope.row.publishStatus">
-              </el-switch>
-            </p>
-            <p>新品：
-              <el-switch
-                @change="handleNewStatusChange(scope.$index, scope.row)"
-                :active-value="1"
-                :inactive-value="0"
-                v-model="scope.row.newStatus">
-              </el-switch>
-            </p>
-            <p>推荐：
-              <el-switch
-                @change="handleRecommendStatusChange(scope.$index, scope.row)"
-                :active-value="1"
-                :inactive-value="0"
-                v-model="scope.row.recommandStatus">
-              </el-switch>
-            </p>
-          </template>
+        <el-table-column label="模板列表" width="200" align="center">
+          <template slot-scope="scope">{{scope.row.templateList}}</template>
         </el-table-column>
-        <el-table-column label="排序" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.sort}}</template>
+        <el-table-column label="活动链接" width="290" align="center">
+          <template slot-scope="scope">https://test.wechatvr.org/zuul/hotlink-user/activity?activityId={{scope.row.activityId}}</template>
         </el-table-column>
-        <el-table-column label="SKU库存" width="100" align="center">
-          <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" @click="handleShowSkuEditDialog(scope.$index, scope.row)" circle></el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="销量" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.sale}}</template>
-        </el-table-column>
-        <el-table-column label="审核状态" width="100" align="center">
-          <template slot-scope="scope">
-            <p>{{scope.row.verifyStatus | verifyStatusFilter}}</p>
-            <p>
-              <el-button
-                type="text"
-                @click="handleShowVerifyDetail(scope.$index, scope.row)">审核详情
-              </el-button>
-            </p>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="160" align="center">
+
+        <el-table-column label="操作" width="115" align="center">
           <template slot-scope="scope">
             <p>
-              <el-button
-                size="mini"
-                @click="handleShowProduct(scope.$index, scope.row)">查看
-              </el-button>
-              <el-button
-                size="mini"
-                @click="handleUpdateProduct(scope.$index, scope.row)">编辑
-              </el-button>
-            </p>
-            <p>
-              <el-button
-                size="mini"
-                @click="handleShowLog(scope.$index, scope.row)">日志
-              </el-button>
-              <el-button
-                size="mini"
-                type="danger"
-                @click="handleDelete(scope.$index, scope.row)">删除
-              </el-button>
+
+              <el-form :inline="true" :model="statisticByDayslistQuery" size="small" label-width="100px">
+                <el-form-item>
+                  <el-button
+                    size="mini"
+                    @click="handleShowProduct(scope.$index, scope.row)">编辑
+                  </el-button>
+                </el-form-item>
+                <el-form-item>
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)">取消
+                  </el-button>
+                </el-form-item>
+              </el-form>
+
+              <!--<el-button-->
+                <!--size="mini"-->
+                <!--@click="handleShowProduct(scope.$index, scope.row)">编辑-->
+              <!--</el-button>-->
+              <!--<el-button-->
+                <!--size="mini"-->
+                <!--type="danger"-->
+                <!--@click="handleDelete(scope.$index, scope.row)">取消-->
+              <!--</el-button>-->
             </p>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <div class="batch-operate-container">
-      <el-select
-        size="small"
-        v-model="operateType" placeholder="批量操作">
-        <el-option
-          v-for="item in operates"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-button
-        style="margin-left: 20px"
-        class="search-button"
-        @click="handleBatchOperate()"
-        type="primary"
-        size="small">
-        确定
-      </el-button>
-    </div>
+
     <div class="pagination-container">
       <el-pagination
         background
@@ -207,68 +127,10 @@
         layout="total, sizes,prev, pager, next,jumper"
         :page-size="listQuery.pageSize"
         :page-sizes="[5,10,15]"
-        :current-page.sync="listQuery.pageNum"
+        :current-page.sync="listQuery.pageNumber"
         :total="total">
       </el-pagination>
     </div>
-    <el-dialog
-      title="编辑货品信息"
-      :visible.sync="editSkuInfo.dialogVisible"
-      width="40%">
-      <span>商品货号：</span>
-      <span>{{editSkuInfo.productSn}}</span>
-      <el-input placeholder="按sku编号搜索" v-model="editSkuInfo.keyword" size="small" style="width: 50%;margin-left: 20px">
-        <el-button slot="append" icon="el-icon-search" @click="handleSearchEditSku"></el-button>
-      </el-input>
-      <el-table style="width: 100%;margin-top: 20px"
-                :data="editSkuInfo.stockList"
-                border>
-        <el-table-column
-          label="SKU编号"
-          align="center">
-          <template slot-scope="scope">
-            <el-input v-model="scope.row.skuCode"></el-input>
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-for="(item,index) in editSkuInfo.productAttr"
-          :label="item.name"
-          :key="item.id"
-          align="center">
-          <template slot-scope="scope">
-            {{getProductSkuSp(scope.row,index)}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="销售价格"
-          width="80"
-          align="center">
-          <template slot-scope="scope">
-            <el-input v-model="scope.row.price"></el-input>
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="商品库存"
-          width="80"
-          align="center">
-          <template slot-scope="scope">
-            <el-input v-model="scope.row.stock"></el-input>
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="库存预警值"
-          width="100"
-          align="center">
-          <template slot-scope="scope">
-            <el-input v-model="scope.row.lowStock"></el-input>
-          </template>
-        </el-table-column>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="editSkuInfo.dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleEditSkuConfirm">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 <script>
@@ -283,11 +145,14 @@
   import {fetchList as fetchProductAttrList} from '@/api/productAttr'
   import {fetchList as fetchBrandList} from '@/api/brand'
   import {fetchListWithChildren} from '@/api/productCate'
+  import {fetchActivityList,cancleActivity} from '@/api/hotlink_resource'
 
   const defaultListQuery = {
     keyword: null,
-    pageNum: 1,
-    pageSize: 5,
+    activityId: null,
+    activityTitle: null,
+    pageNumber: 1,
+    pageSize: 10,
     publishStatus: null,
     verifyStatus: null,
     productSn: null,
@@ -350,12 +215,22 @@
         multipleSelection: [],
         productCateOptions: [],
         brandOptions: [],
-        publishStatusOptions: [{
+        activityStatusCode: [{
           value: 1,
-          label: '上架'
+          code: "PREPARING",
+          label: '测试中'
         }, {
-          value: 0,
-          label: '下架'
+          value: 2,
+          code: "ONGOING",
+          label: '活动中'
+        }, {
+          value: 3,
+          code: "FINISHED",
+          label: '已结束'
+        }, {
+          value: 4,
+          code: "CANCELLED",
+          label: '已取消'
         }],
         verifyStatusOptions: [{
           value: 1,
@@ -367,9 +242,10 @@
       }
     },
     created() {
-      this.getList();
-      this.getBrandList();
-      this.getProductCateList();
+      // this.getList();
+      this.getActivityList();
+      //this.getBrandList();
+      //this.getProductCateList();
     },
     watch: {
       selectProductCateValue: function (newValue) {
@@ -400,12 +276,20 @@
           return row.sp3;
         }
       },
-      getList() {
+      // getList() {
+      //   this.listLoading = true;
+      //   fetchList(this.listQuery).then(response => {
+      //     this.listLoading = false;
+      //     this.list = response.data.list;
+      //     this.total = response.data.total;
+      //   });
+      // },
+      getActivityList() {
         this.listLoading = true;
-        fetchList(this.listQuery).then(response => {
+        fetchActivityList(this.listQuery).then(response => {
           this.listLoading = false;
-          this.list = response.data.list;
-          this.total = response.data.total;
+          this.list = response.activityRecords;
+          this.total = response.recordNumber;
         });
       },
       getBrandList() {
@@ -475,8 +359,8 @@
         });
       },
       handleSearchList() {
-        this.listQuery.pageNum = 1;
-        this.getList();
+        this.listQuery.pageNumber = 1;
+        this.getActivityList();
       },
       handleAddProduct() {
         this.$router.push({path:'/pms/addProduct'});
@@ -538,13 +422,13 @@
         });
       },
       handleSizeChange(val) {
-        this.listQuery.pageNum = 1;
+        this.listQuery.pageNumber = 1;
         this.listQuery.pageSize = val;
-        this.getList();
+        this.getActivityList();
       },
       handleCurrentChange(val) {
-        this.listQuery.pageNum = val;
-        this.getList();
+        this.listQuery.pageNumber = val;
+        this.getActivityList();
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
@@ -569,18 +453,39 @@
         this.listQuery = Object.assign({}, defaultListQuery);
       },
       handleDelete(index, row){
-        this.$confirm('是否要进行删除操作?', '提示', {
+        this.$confirm('是否要取消该活动?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let ids = [];
-          ids.push(row.id);
-          this.updateDeleteStatus(1,ids);
+          console.log("activityStatusDescription:", row.activityStatusDescription)
+          if(row.activityStatusDescription == '测试中') {
+            cancleActivity(row.activityId).then(response => {
+              this.$message({
+                type: 'success',
+                message: '取消成功'
+              });
+            });
+            //location.reload();
+          } else {
+            this.$alert('仅可取消测试中的活动','取消失败', {
+              confirmButtonText: '确定',
+              callback: action => {
+                this.$message({
+                  type: 'info',
+                  message: '取消失败'
+                });
+              }
+            });
+          }
+          // let ids = [];
+          // ids.push(row.id);
+          // this.updateDeleteStatus(1,ids);
         });
       },
       handleUpdateProduct(index,row){
-        this.$router.push({path:'/pms/updateProduct',query:{id:row.id}});
+        console.log("传入的活动ID", row.activityId);
+        this.$router.push({path:'/pms/updateProduct',query:{id:row.activityId}});
       },
       handleShowProduct(index,row){
         console.log("handleShowProduct",row);

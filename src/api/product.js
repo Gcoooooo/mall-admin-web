@@ -7,6 +7,14 @@ export function fetchList(params) {
   })
 }
 
+export function fetchActivityList(data) {
+  return request({
+    url:'/activity/basic/search',
+    method:'post',
+    data:data
+  })
+}
+
 export function fetchSimpleList(params) {
   return request({
     url:'/product/simpleList',

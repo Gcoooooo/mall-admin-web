@@ -6,10 +6,10 @@
                :rules="loginRules"
                ref="loginForm"
                label-position="left">
-        <div style="text-align: center">
-          <svg-icon icon-class="login-mall" style="width: 56px;height: 56px;color: #409EFF"></svg-icon>
+        <div style="text-align: center" >
+          <svg-icon icon-class="hotlink" class="total-icon" style="width: 56px;height: 56px;color: #409EFF"></svg-icon>
         </div>
-        <h2 class="login-title color-main">mall-admin-web</h2>
+        <h2 class="login-title color-main">热链科技</h2>
         <el-form-item prop="username">
           <el-input name="username"
                     type="text"
@@ -131,5 +131,11 @@
     max-width: 100%;
     max-height: 100%;
     margin-top: 200px;
+  }
+
+  .total-icon {
+    color: #409EFF;
+    width: 60px;
+    height: 60px;
   }
 </style>

@@ -137,6 +137,7 @@
 </template>
 <script>
   import {fetchList, updateShowStatus, updateFactoryStatus, deleteBrand} from '@/api/brand'
+  import {fetchActivityList} from '@/api/hotlink_resource'
 
   export default {
     name: 'brandList',

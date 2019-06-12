@@ -1,230 +1,228 @@
 <template>
   <div class="app-container">
-    <div class="address-layout">
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <div class="out-border">
-            <div class="layout-title">GitHub地址</div>
-            <div style="padding: 20px;font-size: 18px" class="color-main">
-              <a href="https://github.com/macrozheng/mall">https://github.com/macrozheng/mall</a>
-            </div>
-          </div>
-        </el-col>
-        <el-col :span="12">
-          <div class="out-border">
-            <div class="layout-title">码云地址</div>
-            <div style="padding: 20px;font-size: 18px" class="color-main">
-              <a href="https://gitee.com/macrozheng/mall">https://gitee.com/macrozheng/mall</a>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
     <div class="total-layout">
       <el-row :gutter="20">
         <el-col :span="6">
           <div class="total-frame">
-            <svg-icon icon-class="order" class="total-icon">
+            <svg-icon icon-class="job-total2" class="total-icon">
             </svg-icon>
-            <div class="total-title">今日订单总数</div>
-            <div class="total-value">200</div>
+            <div class="total-title">活动总数</div>
+            <div class="total-value">{{activityStaticData.countActivity}}</div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="total-frame">
-            <svg-icon icon-class="total-today" class="total-icon">
+            <svg-icon icon-class="job-ing2" class="total-icon">
             </svg-icon>
-            <div class="total-title">今日销售总额</div>
-            <div class="total-value">￥5000.00</div>
+            <div class="total-title">进行中的活动数</div>
+            <div class="total-value">{{activityStaticData.countOngoingActivity}}</div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="total-frame">
-            <svg-icon icon-class="total-yesterday" class="total-icon">
+            <svg-icon icon-class="job-wait2" class="total-icon">
             </svg-icon>
-            <div class="total-title">昨日销售总额</div>
-            <div class="total-value">￥5000.00</div>
+            <div class="total-title">待开始的活动数</div>
+            <div class="total-value">{{activityStaticData.countPreparingActivity}}</div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="total-frame">
-            <svg-icon icon-class="total-week" class="total-icon">
+            <svg-icon icon-class="job-finish2" class="total-icon">
             </svg-icon>
-            <div class="total-title">近7天销售总额</div>
-            <div class="total-value">￥50000.00</div>
+            <div class="total-title">已完成的活动数</div>
+            <div class="total-value">{{activityStaticData.countFinishedActivity}}</div>
           </div>
         </el-col>
       </el-row>
     </div>
-    <div class="un-handle-layout">
-      <div class="layout-title">待处理事务</div>
-      <div class="un-handle-content">
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <div class="un-handle-item">
-              <span class="font-medium">待付款订单</span>
-              <span style="float: right" class="color-danger">(10)</span>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="un-handle-item">
-              <span class="font-medium">已完成订单</span>
-              <span style="float: right" class="color-danger">(10)</span>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="un-handle-item">
-              <span class="font-medium">待确认收货订单</span>
-              <span style="float: right" class="color-danger">(10)</span>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <div class="un-handle-item">
-              <span class="font-medium">待发货订单</span>
-              <span style="float: right" class="color-danger">(10)</span>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="un-handle-item">
-              <span class="font-medium">新缺货登记</span>
-              <span style="float: right" class="color-danger">(10)</span>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="un-handle-item">
-              <span class="font-medium">待处理退款申请</span>
-              <span style="float: right" class="color-danger">(10)</span>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <div class="un-handle-item">
-              <span class="font-medium">已发货订单</span>
-              <span style="float: right" class="color-danger">(10)</span>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="un-handle-item">
-              <span class="font-medium">待处理退货订单</span>
-              <span style="float: right" class="color-danger">(10)</span>
-            </div>
-          </el-col>
-          <el-col :span="8">
-            <div class="un-handle-item">
-              <span class="font-medium">广告位即将到期</span>
-              <span style="float: right" class="color-danger">(10)</span>
-            </div>
-          </el-col>
-        </el-row>
-      </div>
-    </div>
-    <div class="overview-layout">
+
+    <div class="total-layout">
       <el-row :gutter="20">
-        <el-col :span="12">
-          <div class="out-border">
-            <div class="layout-title">商品总览</div>
-            <div style="padding: 40px">
-              <el-row>
-                <el-col :span="6" class="color-danger overview-item-value">100</el-col>
-                <el-col :span="6" class="color-danger overview-item-value">400</el-col>
-                <el-col :span="6" class="color-danger overview-item-value">50</el-col>
-                <el-col :span="6" class="color-danger overview-item-value">500</el-col>
-              </el-row>
-              <el-row class="font-medium">
-                <el-col :span="6" class="overview-item-title">已下架</el-col>
-                <el-col :span="6" class="overview-item-title">已上架</el-col>
-                <el-col :span="6" class="overview-item-title">库存紧张</el-col>
-                <el-col :span="6" class="overview-item-title">全部商品</el-col>
-              </el-row>
-            </div>
+        <el-col :span="6">
+          <div class="total-frame">
+            <svg-icon icon-class="normalUser2" class="total-icon">
+            </svg-icon>
+            <div class="total-title">用户总数</div>
+            <div class="total-value">{{basicStaticData.totalUserCount}}</div>
           </div>
         </el-col>
-        <el-col :span="12">
-          <div class="out-border">
-            <div class="layout-title">用户总览</div>
-            <div style="padding: 40px">
-              <el-row>
-                <el-col :span="6" class="color-danger overview-item-value">100</el-col>
-                <el-col :span="6" class="color-danger overview-item-value">200</el-col>
-                <el-col :span="6" class="color-danger overview-item-value">1000</el-col>
-                <el-col :span="6" class="color-danger overview-item-value">5000</el-col>
-              </el-row>
-              <el-row class="font-medium">
-                <el-col :span="6" class="overview-item-title">今日新增</el-col>
-                <el-col :span="6" class="overview-item-title">昨日新增</el-col>
-                <el-col :span="6" class="overview-item-title">本月新增</el-col>
-                <el-col :span="6" class="overview-item-title">会员总数</el-col>
-              </el-row>
-            </div>
+        <el-col :span="6">
+          <div class="total-frame">
+            <svg-icon icon-class="totalVisit2" class="total-icon">
+            </svg-icon>
+            <div class="total-title">访问量总数</div>
+            <div class="total-value">{{basicStaticData.totalVisitCount}}</div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="total-frame">
+            <svg-icon icon-class="newUser2" class="total-icon">
+            </svg-icon>
+            <div class="total-title">今日新用户数</div>
+            <div class="total-value">{{basicStaticData.newUserCount}}</div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="total-frame">
+            <svg-icon icon-class="todayVisit2" class="total-icon">
+            </svg-icon>
+            <div class="total-title">今日新访问量</div>
+            <div class="total-value">{{basicStaticData.newVisitCount}}</div>
           </div>
         </el-col>
       </el-row>
     </div>
-    <div class="statistics-layout">
-      <div class="layout-title">订单统计</div>
+
+    <div class="out-border" style="margin-top: 15px">
+      <div class="layout-title"> <i class="el-icon-search"></i> 日访问量统计</div>
+        <div style="margin-top: 15px">
+          <el-form :inline="true" :model="statisticByDayslistQuery" size="small" label-width="100px">
+            <el-form-item label="活动ID：" prop="activityId">
+              <el-input v-model="statisticByDayslistQuery.activityId" placeholder="活动ID"></el-input>
+            </el-form-item>
+
+            <el-form-item label="日期区间：" prop="time">
+              <el-date-picker
+                style="width: 400px"
+                size="small"
+                v-model="orderCountDate"
+                type="daterange"
+                align="right"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期">
+              </el-date-picker>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button
+                style="float: right"
+                @click="getStatisticByDaysData()"
+                type="primary"
+                size="small">
+                查询
+              </el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+
       <el-row>
         <el-col :span="4">
           <div style="padding: 20px">
-            <div>
-              <div style="color: #909399;font-size: 14px">本月订单总数</div>
-              <div style="color: #606266;font-size: 24px;padding: 10px 0">10000</div>
-              <div>
-                <span class="color-success" style="font-size: 14px">+10%</span>
-                <span style="color: #C0C4CC;font-size: 14px">同比上月</span>
-              </div>
+            <div style="margin-top: 20px;">
+              <div style="color: #909399;font-size: 14px">总访问人数</div>
+              <div style="color: #606266;font-size: 24px;padding: 10px 0">{{statisticByDaysData.participantCount}}</div>
             </div>
             <div style="margin-top: 20px;">
-              <div style="color: #909399;font-size: 14px">本周订单总数</div>
-              <div style="color: #606266;font-size: 24px;padding: 10px 0">1000</div>
-              <div>
-                <span class="color-danger" style="font-size: 14px">-10%</span>
-                <span style="color: #C0C4CC;font-size: 14px">同比上周</span>
-              </div>
-            </div>
-            <div style="margin-top: 20px;">
-              <div style="color: #909399;font-size: 14px">本月销售总额</div>
-              <div style="color: #606266;font-size: 24px;padding: 10px 0">100000</div>
-              <div>
-                <span class="color-success" style="font-size: 14px">+10%</span>
-                <span style="color: #C0C4CC;font-size: 14px">同比上月</span>
-              </div>
-            </div>
-            <div style="margin-top: 20px;">
-              <div style="color: #909399;font-size: 14px">本周销售总额</div>
-              <div style="color: #606266;font-size: 24px;padding: 10px 0">50000</div>
-              <div>
-                <span class="color-danger" style="font-size: 14px">-10%</span>
-                <span style="color: #C0C4CC;font-size: 14px">同比上周</span>
-              </div>
+              <div style="color: #909399;font-size: 14px">总访问量</div>
+              <div style="color: #606266;font-size: 24px;padding: 10px 0">{{statisticByDaysData.visitCount}}</div>
             </div>
           </div>
         </el-col>
         <el-col :span="20">
-          <div style="padding: 10px;border-left:1px solid #DCDFE6">
+          <div style="padding: 20px;border-left:1px solid #DCDFE6">
+            <ve-line
+              :data="chartDataOfStatiscByDays"
+              :legend-visible="false"
+              :loading="loading"
+              :data-empty="dataEmpty"
+              :settings="StatiscByDayschartSettings">
+            </ve-line>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+
+    <div class="out-border" style="margin-top: 15px">
+      <div class="layout-title"> <i class="el-icon-search"></i> 时段访问量统计</div>
+      <div style="margin-top: 15px">
+        <el-form :inline="true" :model="statisticByHourslistQuery" size="small" label-width="100px">
+          <el-form-item label="活动ID：" prop="activityId">
+            <el-input v-model="statisticByHourslistQuery.activityId" placeholder="活动ID"></el-input>
+          </el-form-item>
+
+          <el-form-item label="日期：" prop="time">
             <el-date-picker
-              style="float: right;z-index: 1"
-              size="small"
-              v-model="orderCountDate"
-              type="daterange"
-              align="right"
-              unlink-panels
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              @change="handleDateChange"
-              :picker-options="pickerOptions">
+              style="width: 400px"
+              v-model="statisticByHourslistQuery.date"
+              type="date"
+              value-format="yyyy-MM-dd"
+              placeholder="选择统计时间">
             </el-date-picker>
-            <div>
-              <ve-line
-                :data="chartData"
-                :legend-visible="false"
-                :loading="loading"
-                :data-empty="dataEmpty"
-                :settings="chartSettings"></ve-line>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button
+              style="float: right"
+              @click="getStatisticByHoursData()"
+              type="primary"
+              size="small">
+              查询
+            </el-button>
+          </el-form-item>
+        </el-form>
+
+      </div>
+
+      <el-row>
+        <el-col :span="4">
+          <div style="padding: 20px">
+            <div style="margin-top: 20px;">
+              <div style="color: #909399;font-size: 14px">总访问人数</div>
+              <div style="color: #606266;font-size: 24px;padding: 10px 0">{{statisticByHoursData.participantCount}}</div>
             </div>
+            <div style="margin-top: 20px;">
+              <div style="color: #909399;font-size: 14px">总访问量</div>
+              <div style="color: #606266;font-size: 24px;padding: 10px 0">{{statisticByHoursData.visitCount}}</div>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="20">
+          <div style="padding: 20px;border-left:1px solid #DCDFE6">
+            <ve-line
+              :data="chartDataOfStatiscByHours"
+              :legend-visible="false"
+              :loading="loading"
+              :data-empty="dataEmpty"
+              :settings="StatiscByHourschartSettings">
+            </ve-line>
+          </div>
+        </el-col>
+      </el-row>
+
+    </div>
+
+    <div class="statistics-layout">
+      <div class="layout-title">其他数据统计</div>
+      <el-form :inline="true" :model="statisticOtherslistQuery" size="small" label-width="100px" style="margin-top: 15px">
+        <el-form-item label="活动ID：" prop="activityId">
+          <el-input v-model="statisticOtherslistQuery.activityId" placeholder="活动ID"></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button
+            style="float: right"
+            @click="getStatisticOtherData()"
+            type="primary"
+            size="small">
+            查询
+          </el-button>
+        </el-form-item>
+      </el-form>
+
+      <el-row>
+        <el-col :span="12">
+          <div style="padding: 20px">
+            <div style="color: #909399;font-size: 14px;text-align: center;margin-bottom: 10px">操作系统统计</div>
+            <ve-ring :data="chartDataOfStatisticOs"></ve-ring>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div style="padding: 20px;border-left:1px solid #DCDFE6">
+            <div style="color: #909399;font-size: 14px;text-align: center;margin-bottom: 10px">浏览器类型统计</div>
+            <ve-ring :data="chartDataOfStatisticBrowser"></ve-ring>
           </div>
         </el-col>
       </el-row>
@@ -234,30 +232,42 @@
 
 <script>
   import {str2Date} from '@/utils/date';
-  const DATA_FROM_BACKEND = {
-    columns: ['date', 'orderCount','orderAmount'],
-    rows: [
-      {date: '2018-11-01', orderCount: 10, orderAmount: 1093},
-      {date: '2018-11-02', orderCount: 20, orderAmount: 2230},
-      {date: '2018-11-03', orderCount: 33, orderAmount: 3623},
-      {date: '2018-11-04', orderCount: 50, orderAmount: 6423},
-      {date: '2018-11-05', orderCount: 80, orderAmount: 8492},
-      {date: '2018-11-06', orderCount: 60, orderAmount: 6293},
-      {date: '2018-11-07', orderCount: 20, orderAmount: 2293},
-      {date: '2018-11-08', orderCount: 60, orderAmount: 6293},
-      {date: '2018-11-09', orderCount: 50, orderAmount: 5293},
-      {date: '2018-11-10', orderCount: 30, orderAmount: 3293},
-      {date: '2018-11-11', orderCount: 20, orderAmount: 2293},
-      {date: '2018-11-12', orderCount: 80, orderAmount: 8293},
-      {date: '2018-11-13', orderCount: 100, orderAmount: 10293},
-      {date: '2018-11-14', orderCount: 10, orderAmount: 1293},
-      {date: '2018-11-15', orderCount: 40, orderAmount: 4293}
-    ]
+  import {getActivityStaticData,getStatisticByDays,getStatisticByHours,getOtherStatistic,getBasicStatistic} from '@/api/hotlink_resource';
+
+  const defaultListQueryStatisticByHours = {
+    date:null,
+    activityId: null,
+  };
+  const defaultListQueryStatisticByDays = {
+    createTimeStart:null,
+    createTimeEnd:null,
+    activityId: null,
+  };
+  const defaultListQueryStatisticOther = {
+    activityId: null
   };
   export default {
     name: 'home',
     data() {
       return {
+        statisticByHourslistQuery: Object.assign({}, defaultListQueryStatisticByHours),
+        statisticByDayslistQuery: Object.assign({}, defaultListQueryStatisticByDays),
+        statisticOtherslistQuery: Object.assign({}, defaultListQueryStatisticOther),
+        statisticByHoursData:{visitCount: 0, participantCount: 0},
+        statisticByDaysData:{visitCount: 0, participantCount: 0},
+        basicStaticData: {
+          totalUserCount:0,
+          totalVisitCount:0,
+          newUserCount:0,
+          newVisitCount:0
+        },
+        activityStaticData: {
+          countActivity:0,
+          countPreparingActivity:0,
+          countOngoingActivity:0,
+          countFinishedActivity:0,
+          countCancelledActivity:0
+        },
         pickerOptions: {
           shortcuts: [{
             text: '最近一周',
@@ -284,27 +294,112 @@
           }]
         },
         orderCountDate: '',
-        chartSettings: {
-          xAxisType: 'time',
-          area:true,
-          axisSite: { right: ['orderAmount']},
-        labelMap: {'orderCount': '订单数量', 'orderAmount': '订单金额'}},
-        chartData: {
-          columns: [],
-          rows: []
+
+        StatiscByHourschartSettings: {
+          xAxisName: ['时间'],
+          yAxisName: ['数值'],
+          xAxisType: 'category',
+          area:false,
+          labelMap: {'visitCount': 'PV', 'participantCount': 'UV'}
+        },
+        StatiscByDayschartSettings: {
+          xAxisName: ['日期'],
+          yAxisName: ['数值'],
+          xAxisType: 'category',
+          area:false,
+          labelMap: {'visitCount': 'PV', 'participantCount': 'UV'}
+        },
+        chartDataOfStatiscByHours: {
+          columns: ['hour', 'visitCount','participantCount'],
+          rows: [
+            {hour: "1", visitCount: 0, participantCount: 0},
+            {hour: "2", visitCount: 0, participantCount: 0},
+            {hour: "3", visitCount: 0, participantCount: 0},
+            {hour: "4", visitCount: 0, participantCount: 0},
+            {hour: "5", visitCount: 0, participantCount: 0},
+            {hour: "6", visitCount: 0, participantCount: 0},
+            {hour: "7", visitCount: 0, participantCount: 0},
+            {hour: "8", visitCount: 0, participantCount: 0},
+            {hour: "9", visitCount: 0, participantCount: 0},
+            {hour: "10", visitCount: 0, participantCount: 0},
+            {hour: "11", visitCount: 0, participantCount: 0},
+            {hour: "12", visitCount: 0, participantCount: 0},
+            {hour: "13", visitCount: 0, participantCount: 0},
+            {hour: "14", visitCount: 0, participantCount: 0},
+            {hour: "15", visitCount: 0, participantCount: 0},
+            {hour: "16", visitCount: 0, participantCount: 0},
+            {hour: "17", visitCount: 0, participantCount: 0},
+            {hour: "18", visitCount: 0, participantCount: 0},
+            {hour: "19", visitCount: 0, participantCount: 0},
+            {hour: "20", visitCount: 0, participantCount: 0},
+            {hour: "21", visitCount: 0, participantCount: 0},
+            {hour: "22", visitCount: 0, participantCount: 0},
+            {hour: "23", visitCount: 0, participantCount: 0},
+            {hour: "24", visitCount: 0, participantCount: 0}
+          ]
+        },
+        chartDataOfStatiscByDays: {
+          columns: ['date', 'visitCount','participantCount'],
+          rows: [
+            {date:"2019-05-14",visitCount:0,participantCount:0},
+            {date:"2019-05-15",visitCount:0,participantCount:0},
+            {date:"2019-05-16",visitCount:0,participantCount:0},
+            {date:"2019-05-17",visitCount:0,participantCount:0},
+            {date:"2019-05-18",visitCount:0,participantCount:0},
+            {date:"2019-05-20",visitCount:0,participantCount:0},
+            {date:"2019-05-21",visitCount:0,participantCount:0},
+            {date:"2019-05-22",visitCount:0,participantCount:0}
+          ]
+        },
+        chartDataOfStatisticOs: {
+          columns: ['type', 'count'],
+          rows: [
+            {type: "Android", count: 1},
+            {type: "iOS", count: 1}
+          ]
+        },
+        chartDataOfStatisticBrowser: {
+          columns: ['type', 'count'],
+          rows: [
+            {type: "Wechat", count: 1},
+            {type: "Chorme", count: 1},
+            {type: "Firefox", count: 1}
+          ]
         },
         loading: false,
         dataEmpty: false
       }
     },
-    created(){
-      this.initOrderCountDate();
-      this.getData();
+    created() {
+      //this.initOrderCountDate();
+      //this.getData();
+      this.getActivityStaticData();
+      this.getStatisticBasic();
     },
     methods:{
-      handleDateChange(){
-        this.getData();
+      getStatisticBasic(){
+        getBasicStatistic().then(response => {
+          this.basicStaticData.newUserCount = response.newUserCount;
+          this.basicStaticData.newVisitCount = response.newVisitCount;
+          this.basicStaticData.totalVisitCount = response.totalVisitCount;
+          this.basicStaticData.totalUserCount = response.totalUserCount;
+        });
       },
+      handleSearchList() {
+        this.listQuery.pageNumber = 1;
+      },
+      getActivityStaticData(){
+        getActivityStaticData().then(response => {
+          this.activityStaticData.countActivity = response.countActivity;
+          this.activityStaticData.countPreparingActivity = response.countPreparingActivity;
+          this.activityStaticData.countOngoingActivity = response.countOngoingActivity;
+          this.activityStaticData.countFinishedActivity = response.countFinishedActivity;
+          this.activityStaticData.countCancelledActivity = response.countCancelledActivity;
+        })
+      },
+      // handleDateChange(){
+      //   this.getData();
+      // },
       initOrderCountDate(){
         let start = new Date();
         start.setFullYear(2018);
@@ -314,21 +409,88 @@
         end.setTime(start.getTime() + 1000 * 60 * 60 * 24 * 7);
         this.orderCountDate=[start,end];
       },
-      getData(){
+      getStatisticOtherData(){
+        this.chartDataOfStatisticBrowser = {
+          columns: ['type', 'count'],
+          rows: []
+        };
+
+        this.chartDataOfStatisticOs = {
+          columns: ['type', 'count'],
+          rows: []
+        };
+
         setTimeout(() => {
-          this.chartData = {
-            columns: ['date', 'orderCount','orderAmount'],
-            rows: []
-          };
-          for(let i=0;i<DATA_FROM_BACKEND.rows.length;i++){
-            let item=DATA_FROM_BACKEND.rows[i];
-            let currDate=str2Date(item.date);
-            let start=this.orderCountDate[0];
-            let end=this.orderCountDate[1];
-            if(currDate.getTime()>=start.getTime()&&currDate.getTime()<=end.getTime()){
-              this.chartData.rows.push(item);
+          getOtherStatistic(this.statisticOtherslistQuery).then(response => {
+            for(let i=0;i<response.osStatistics.length;i++){
+              this.chartDataOfStatisticOs.rows.push({
+                type:response.osStatistics[i].type,
+                count:response.osStatistics[i].count
+              })
             }
-          }
+
+            for(let i=0;i<response.browserStatistics.length;i++){
+              this.chartDataOfStatisticBrowser.rows.push({
+                type:response.browserStatistics[i].type,
+                count:response.browserStatistics[i].count
+              })
+            }
+          });
+
+          console.log("时段统计表格数据: ", this.chartDataOfStatiscByHours.rows);
+          this.dataEmpty = false;
+          this.loading = false
+        }, 1000)
+      },
+      getStatisticByHoursData(){
+        this.getStatisticBasic();
+        this.chartDataOfStatiscByHours = {
+          columns: ['hour', 'visitCount','participantCount'],
+          rows: []
+        };
+
+        setTimeout(() => {
+          getStatisticByHours(this.statisticByHourslistQuery).then(response => {
+            this.statisticByHoursData.participantCount = response.totalParticipantCount;
+            this.statisticByHoursData.visitCount = response.totalVisitCount;
+            for(let i=0;i<response.statisticByHours.length;i++){
+              this.chartDataOfStatiscByHours.rows.push({
+                hour:response.statisticByHours[i].hour,
+                visitCount:response.statisticByHours[i].visitCount,
+                participantCount:response.statisticByHours[i].participantCount
+              })
+            }
+          });
+
+          console.log("时段统计表格数据: ", this.chartDataOfStatiscByHours.rows);
+          this.dataEmpty = false;
+          this.loading = false
+        }, 1000)
+      },
+      getStatisticByDaysData(){
+        this.getStatisticBasic();
+        this.statisticByDayslistQuery.createTimeStart = this.orderCountDate[0];
+        this.statisticByDayslistQuery.createTimeEnd = this.orderCountDate[1];
+
+        this.chartDataOfStatiscByDays = {
+          columns: ['date', 'visitCount','participantCount'],
+          rows: []
+        };
+
+        setTimeout(() => {
+          getStatisticByDays(this.statisticByDayslistQuery).then(response => {
+            this.statisticByDaysData.participantCount = response.totalParticipantCount;
+            this.statisticByDaysData.visitCount = response.totalVisitCount;
+            for(let i=0;i<response.statisticByDays.length;i++){
+              this.chartDataOfStatiscByDays.rows.push({
+                date:response.statisticByDays[i].date,
+                visitCount:response.statisticByDays[i].visitCount,
+                participantCount:response.statisticByDays[i].participantCount
+              })
+            }
+          });
+
+          console.log("日统计表格数据: ", this.chartDataOfStatiscByDays.rows);
           this.dataEmpty = false;
           this.loading = false
         }, 1000)
@@ -339,7 +501,7 @@
 
 <style scoped>
   .app-container {
-    margin-top: 40px;
+    margin-top: 0px;
     margin-left: 120px;
     margin-right: 120px;
   }
@@ -361,6 +523,12 @@
     color: #409EFF;
     width: 60px;
     height: 60px;
+  }
+
+  .total-icon2 {
+    color: #409EFF;
+    width: 40px;
+    height: 40px;
   }
 
   .total-title {

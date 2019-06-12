@@ -1,10 +1,10 @@
 <template> 
   <el-card class="form-container" shadow="never">
     <el-steps :active="active" finish-status="success" align-center>
-      <el-step title="填写商品信息"></el-step>
-      <el-step title="填写商品促销"></el-step>
-      <el-step title="填写商品属性"></el-step>
-      <el-step title="选择商品关联"></el-step>
+      <el-step title="定制活动基本信息"></el-step>
+      <el-step title="定制模板"></el-step>
+      <!--<el-step title="填写商品属性"></el-step>-->
+      <el-step title="定制完成"></el-step>
     </el-steps>
     <product-info-detail
       v-show="showStatus[0]"
@@ -19,15 +19,15 @@
       @nextStep="nextStep"
       @prevStep="prevStep">
     </product-sale-detail>
-    <product-attr-detail
+    <!--<product-attr-detail
       v-show="showStatus[2]"
       v-model="productParam"
       :is-edit="isEdit"
       @nextStep="nextStep"
       @prevStep="prevStep">
-    </product-attr-detail>
+    </product-attr-detail>-->
     <product-relation-detail
-      v-show="showStatus[3]"
+      v-show="showStatus[2]"
       v-model="productParam"
       :is-edit="isEdit"
       @prevStep="prevStep"
@@ -37,14 +37,44 @@
 </template>
 <script>
   import ProductInfoDetail from './ProductInfoDetail';
+  import ProductInfoTest from './ProductInfoTest';
   import ProductSaleDetail from './ProductSaleDetail';
   import ProductAttrDetail from './ProductAttrDetail';
   import ProductRelationDetail from './ProductRelationDetail';
   import {createProduct,getProduct,updateProduct} from '@/api/product';
 
+  import {creatActivity as createProduct2, getActivity} from '@/api/hotlink_resource'
+
   const defaultProductParam = {
+    activityBasicInfo:{
+      sharedPicUrl:'',
+      sharedTitle:'',
+      sharedDescription:'',
+      title:'',
+      startTime:'',
+      endTime:''
+    },
     albumPics: '',
-    brandId: null,
+    lotteryInfo: {
+      userChance: '',
+      shareChance: '',
+      shareAddCount: '',
+      winChance: '',
+      lotteryRule: '',
+      lotteryPrizeInfos:[{name:'', amount: 0, value: 0, prizePicUrl: '', order: 0}]
+    },
+    templateInfo: [{
+        templateId: '',
+        templateName:'',
+        pageNumber: '',
+        basicResourceCount: '',
+        basicResource:[],
+        hasAnimation:'',
+        functions:[],
+        animationResource:{},
+        webarInfo: null,
+    }],
+    resource:[],
     brandName: '',
     deleteStatus: 0,
     description: '',
@@ -105,7 +135,7 @@
   };
   export default {
     name: 'ProductDetail',
-    components: {ProductInfoDetail, ProductSaleDetail, ProductAttrDetail, ProductRelationDetail},
+    components: {ProductInfoDetail, ProductInfoTest, ProductSaleDetail, ProductAttrDetail, ProductRelationDetail},
     props: {
       isEdit: {
         type: Boolean,
@@ -116,12 +146,16 @@
       return {
         active: 0,
         productParam: Object.assign({}, defaultProductParam),
-        showStatus: [true, false, false, false]
+        showStatus: [true, false, false, false, false]
       }
     },
     created(){
       if(this.isEdit){
-        getProduct(this.$route.query.id).then(response=>{
+        // getProduct(this.$route.query.id).then(response=>{
+        //   this.productParam=response.data;
+        // });
+
+        getActivity(this.$route.query.id).then(response=>{
           this.productParam=response.data;
         });
       }
@@ -147,7 +181,7 @@
         }
       },
       finishCommit(isEdit) {
-        this.$confirm('是否要提交该产品', '提示', {
+        this.$confirm('是否要提交该活动', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -162,13 +196,14 @@
               this.$router.back();
             });
           }else{
-            createProduct(this.productParam).then(response=>{
+            createProduct2(this.productParam).then(response=>{
               this.$message({
                 type: 'success',
-                message: '提交成功',
-                duration:1000
+                message: "新建活动链接为：" + response.data.activityUrl,
+                duration:50000
               });
-              location.reload();
+              //location.reload();
+              this.$router.back();
             });
           }
         })
@@ -178,7 +213,7 @@
 </script>
 <style>
   .form-container {
-    width: 800px;
+    width: 1000px;
   }
 </style>
 

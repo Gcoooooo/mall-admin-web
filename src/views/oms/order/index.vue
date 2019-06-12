@@ -69,6 +69,7 @@
       <i class="el-icon-tickets"></i>
       <span>数据列表</span>
     </el-card>
+
     <div class="table-container">
       <el-table ref="orderTable"
                 :data="list"
@@ -76,6 +77,7 @@
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
+
         <el-table-column label="编号" width="80" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
